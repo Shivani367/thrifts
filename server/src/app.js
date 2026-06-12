@@ -5,9 +5,11 @@ require("dotenv").config();
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const User = require("./models/User");
+const testRoutes = require("./routes/testRoutes");
+
 
 const app = express();
-
+app.use("/api/test", testRoutes);
 app.use(cors());
 app.use(express.json());
 
