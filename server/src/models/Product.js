@@ -40,11 +40,33 @@ const productSchema = new mongoose.Schema(
       ],
       default: "good",
     },
+    brand: {
+  type: String,
+},
+
+location: {
+  type: String,
+},
+
+originalPrice: {
+  type: Number,
+},
+
+productAge: {
+  type: String,
+},
+
+status: {
+  type: String,
+  enum: ["available", "sold"],
+  default: "available",
+},
 
     seller: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+},
 
     images: [
       {

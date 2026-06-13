@@ -5,19 +5,28 @@ const createProduct = async (req, res) => {
     console.log(req.body);
 
     const {
-      title,
-      description,
-      price,
-      category,
-      condition,
-    } = req.body;
-    const product = await Product.create({
-    title,
-    description,
-    price,
-    category,
-    condition,
-    seller: req.user.userId,
+  title,
+  description,
+  price,
+  originalPrice,
+  category,
+  condition,
+  brand,
+  location,
+  productAge,
+} = req.body;
+    
+const product = await Product.create({
+  title,
+  description,
+  price,
+  originalPrice,
+  category,
+  condition,
+  brand,
+  location,
+  productAge,
+  seller: req.user.userId,
 });
 
     return res.status(201).json({

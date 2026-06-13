@@ -14,9 +14,31 @@ function ProductCard({ product }) {
 
       <p>{product.description}</p>
 
-      <h4>₹{product.price}</h4>
+      <p>₹{product.price}</p>
 
-      <p>{product.category}</p>
+      {product.brand && (
+        <p>Brand: {product.brand}</p>
+      )}
+
+      {product.location && (
+        <p>Location: {product.location}</p>
+      )}
+
+      {product.condition && (
+        <p>Condition: {product.condition}</p>
+      )}
+
+      {product.productAge && (
+        <p>Age: {product.productAge}</p>
+      )}
+
+      {product.status && (
+        <p>Status: {product.status}</p>
+      )}
+
+      {product.originalPrice && (
+        <p>Original Price: ₹{product.originalPrice}</p>
+      )}
 
       <Link to={`/product/${product._id}`}>
         View Details
