@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 
 const protect = async (req, res, next) => {
   try {
+    console.log("AUTH HEADER:");
+    console.log(req.headers.authorization);
+
     let token;
 
     if (
@@ -10,6 +13,9 @@ const protect = async (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
+
+    console.log("TOKEN:");
+    console.log(token);
 
     if (!token) {
       return res.status(401).json({
@@ -23,15 +29,19 @@ const protect = async (req, res, next) => {
       process.env.JWT_SECRET
     );
 
+    console.log("DECODED:");
+    console.log(decoded);
+
     req.user = decoded;
 
     next();
   } catch (error) {
+    console.log(error);
+
     return res.status(401).json({
       success: false,
       message: "Invalid token",
     });
   }
 };
-
 module.exports = protect;

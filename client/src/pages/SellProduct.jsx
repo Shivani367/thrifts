@@ -11,40 +11,47 @@ const [location, setLocation] = useState("");
 const [originalPrice, setOriginalPrice] = useState("");
 const [productAge, setProductAge] = useState("");
 const [condition, setCondition] = useState("good");
+const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const token = localStorage.getItem("token");
+  try {
+    const token = localStorage.getItem("token");
 
-      const response = await api.post(
-        "/products",
-        {
-          
-  title,
-  description,
-  price,
-  category,
-  brand,
-  location,
-  originalPrice,
-  productAge,
-  condition,
+    const formData = new FormData();
 
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("brand", brand);
+    formData.append("location", location);
+    formData.append("originalPrice", originalPrice);
+    formData.append("productAge", productAge);
+    formData.append("condition", condition);
 
-      console.log(response.data);
-    } catch (error) {
-      console.log(error.response?.data);
+    if (image) {
+      formData.append("image", image);
     }
-  };
+
+    const response = await api.post(
+      "/products",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log(response.data);
+
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
 
   return (
     <form onSubmit={handleSubmit}>
@@ -123,6 +130,16 @@ const [condition, setCondition] = useState("good");
   <option value="good">Good</option>
   <option value="fair">Fair</option>
 </select>
+
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setImage(e.target.files[0])
+  }
+/>
+
+<br /><br />
 
       <button type="submit">
         Sell Product

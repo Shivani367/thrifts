@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const cloudinary = require("../config/cloudinary");
 
 const createProduct = async (req, res) => {
   try {
@@ -15,6 +16,16 @@ const createProduct = async (req, res) => {
   location,
   productAge,
 } = req.body;
+
+let imageUrl = "";
+
+if (req.file) {
+  const result = await cloudinary.uploader.upload(
+    `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`
+  );
+
+  imageUrl = result.secure_url;
+}
     
 const product = await Product.create({
   title,
@@ -26,6 +37,9 @@ const product = await Product.create({
   brand,
   location,
   productAge,
+
+  images: [imageUrl],
+
   seller: req.user.userId,
 });
 
@@ -63,9 +77,9 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(
-      req.params.id
-    );
-
+  req.params.id
+).populate("seller", "name email");
+    
     if (!product) {
       return res.status(404).json({
         success: false,
@@ -78,6 +92,25 @@ const getProductById = async (req, res) => {
       product,
     });
 
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getMyProducts = async (req, res) => {
+  try {
+    const products = await Product.find({
+      seller: req.user.userId,
+    });
+
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      products,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -109,6 +142,14 @@ if (
 }
 
 Object.assign(product, req.body);
+
+if (req.file) {
+  const result = await cloudinary.uploader.upload(
+    `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`
+  );
+
+  product.images = [result.secure_url];
+}
 
 await product.save();
 
@@ -163,6 +204,6 @@ res.status(200).json({
 };
 module.exports = {
   createProduct,getProducts,getProductById,updateProduct,
-  deleteProduct,
+  deleteProduct,getMyProducts,
 
 };
