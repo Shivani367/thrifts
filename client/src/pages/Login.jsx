@@ -34,41 +34,52 @@ navigate("/");
 }
   };
 
-  return (
-    <div>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) =>
-          setEmail(e.target.value)
-        }
-      />
+return (
+  <div>
+    <input
+      type="email"
+      placeholder="Email"
+      value={email}
+      onChange={(e) =>
+        setEmail(e.target.value)
+      }
+    />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
-      {errorMessage && (
-  <p
-    style={{
-      color: "red",
-      marginTop: "10px",
-    }}
-  >
-    {errorMessage}
-  </p>
-)}
+    <input
+      type="password"
+      placeholder="Password"
+      value={password}
+      onChange={(e) =>
+        setPassword(e.target.value)
+      }
+    />
 
-      <button onClick={handleLogin}>
-        Login
-      </button>
-    </div>
-  );
+    {errorMessage && (
+      <p
+        style={{
+          color: "red",
+          marginTop: "10px",
+        }}
+      >
+        {errorMessage}
+      </p>
+    )}
+
+    <p
+      style={{
+        marginTop: "10px",
+      }}
+    >
+      <a href="/forgot-password">
+        Forgot Password?
+      </a>
+    </p>
+
+    <button onClick={handleLogin}>
+      Login
+    </button>
+  </div>
+);
 }
 
 export default Login;

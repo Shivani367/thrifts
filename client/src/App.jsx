@@ -8,6 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import EditProduct from "./pages/EditProduct";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -54,8 +56,17 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
+/>
+<Route
+  path="/reset-password/:token"
+  element={<ResetPassword />}
+/>
         </Routes>
-      
+        
+            
     </BrowserRouter>
     </div>
   );
