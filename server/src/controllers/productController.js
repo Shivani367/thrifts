@@ -57,10 +57,27 @@ const product = await Product.create({
     });
   }
 };
+
 const getProducts = async (req, res) => {
   try {
-    const products = await Product.find()
-.populate("seller", "name email");
+    const keyword = req.query.keyword
+  ? {
+      title: {
+        $regex: req.query.keyword,
+        $options: "i",
+      },
+    }
+  : {};
+
+const category = req.query.category
+  ? { category: req.query.category }
+  : {};
+
+    const products = await Product.find({
+  ...keyword,
+  ...category,
+})
+      .populate("seller", "name email");
 
     res.status(200).json({
       success: true,
@@ -74,6 +91,7 @@ const getProducts = async (req, res) => {
     });
   }
 };
+
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(
