@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/uploadMiddleware");
+
 const protect = require("../middlewares/authMiddleware");
 
 const {
@@ -25,6 +26,7 @@ router.get("/:id", getProductById);
 router.put(
   "/:id",
   protect,
+  upload.single("image"),
   updateProduct
 );
 

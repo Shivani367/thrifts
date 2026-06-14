@@ -9,6 +9,7 @@ function EditProduct() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     fetchProduct();
@@ -37,19 +38,27 @@ function EditProduct() {
     try {
       const token = localStorage.getItem("token");
 
-      await api.put(
-        `/products/${id}`,
-        {
-          title,
-          description,
-          price,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const formData = new FormData();
+
+formData.append("title", title);
+formData.append("description", description);
+formData.append("price", price);
+
+if (image) {
+  formData.append("image", image);
+}
+
+await api.put(
+  `/products/${id}`,
+  formData,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type":
+        "multipart/form-data",
+    },
+  }
+);
 
       alert("Product Updated");
 
@@ -86,6 +95,14 @@ function EditProduct() {
         type="number"
         value={price}
         onChange={(e) => setPrice(e.target.value)
+  }
+/>
+
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setImage(e.target.files[0])
   }
 />
 
