@@ -11,20 +11,53 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <BrowserRouter>
+    
+      <div
+        style={{
+          minHeight: "100vh",
+    background: "#FAF6F1",
+          color: "#3D2C2E",
+        }}
+      >
+        <BrowserRouter>
+        <Navbar />
 
-    <Navbar/>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/sell" element={ <PrivateRoute> <SellProduct /> </PrivateRoute> }/>
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}/>
-        <Route path="/edit-product/:id" element={ <PrivateRoute> <EditProduct /> </PrivateRoute> }/>
-
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/sell"
+            element={
+              <PrivateRoute>
+                <SellProduct />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/product/:id"
+            element={<ProductDetails />}
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-product/:id"
+            element={
+              <PrivateRoute>
+                <EditProduct />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      
     </BrowserRouter>
+    </div>
   );
 }
 

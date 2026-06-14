@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <nav
       style={{
-        background: "#FFF8F0",
+        background: "#EADBC8",
 borderBottom: "1px solid #EADBC8",
         padding: "20px 40px",
         display: "flex",

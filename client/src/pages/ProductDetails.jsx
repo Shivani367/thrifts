@@ -61,7 +61,8 @@ function ProductDetails() {
         Original Price:
         ₹{product.originalPrice}
       </p>
-      <p>Seller: {product.seller.name}</p>
+      <p>
+  Seller: {product.seller?.name}</p>
 <p>Email: {product.seller.email}</p>
 
     </div>

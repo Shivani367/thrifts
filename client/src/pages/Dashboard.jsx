@@ -52,6 +52,32 @@ function Dashboard() {
   }
 };
 
+const handleStatusChange = async (
+  id,
+  status
+) => {
+  try {
+    const token =
+      localStorage.getItem("token");
+
+    await api.put(
+      `/products/${id}`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    fetchMyProducts();
+  } catch (error) {
+    console.log(
+      error.response?.data
+    );
+  }
+};
+
   return (
     <div>
       <h1>My Products</h1>
@@ -69,9 +95,22 @@ function Dashboard() {
   >
     Delete Product
   </button>
+
+  <button
+  onClick={() =>
+    handleStatusChange(
+      product._id,
+      "sold"
+    )
+  }
+>
+  Mark as Sold
+</button>
 </div>
       ))}
     </div>
+
+    
   );
 }
 

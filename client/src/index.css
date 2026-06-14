@@ -1,6 +1,14 @@
-body {
+html,
+body,
+#root {
   margin: 0;
-  background-color: #F8F4EE;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: #EEE6DA;
   color: #3D2C2E;
   font-family: Georgia, serif;
 }

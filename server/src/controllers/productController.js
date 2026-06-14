@@ -73,10 +73,24 @@ const category = req.query.category
   ? { category: req.query.category }
   : {};
 
+  let sort = { createdAt: -1 };
+
+if (req.query.sort === "low") {
+  sort = { price: 1 };
+}
+
+if (req.query.sort === "high") {
+  sort = { price: -1 };
+}
+
+if (req.query.sort === "oldest") {
+  sort = { createdAt: 1 };
+}
+
     const products = await Product.find({
   ...keyword,
   ...category,
-})
+}).sort(sort)
       .populate("seller", "name email");
 
     res.status(200).json({

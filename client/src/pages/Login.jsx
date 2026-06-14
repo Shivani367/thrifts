@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -26,8 +27,11 @@ function Login() {
 
 navigate("/");
     } catch (error) {
-      console.log(error);
-    }
+  setErrorMessage(
+    error.response?.data?.message ||
+    "Invalid email or password"
+  );
+}
   };
 
   return (
@@ -49,6 +53,16 @@ navigate("/");
           setPassword(e.target.value)
         }
       />
+      {errorMessage && (
+  <p
+    style={{
+      color: "red",
+      marginTop: "10px",
+    }}
+  >
+    {errorMessage}
+  </p>
+)}
 
       <button onClick={handleLogin}>
         Login

@@ -4,10 +4,13 @@ function ProductCard({ product }) {
   return (
     <div
   style={{
-  background: "#fff",
+  background: "#FFFDF9",
+boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+border: "1px solid #EADBC8",
   borderRadius: "16px",
   padding: "16px",
-  boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+ 
+  transition: "0.3s",
   overflow: "hidden",
  
 }}
@@ -43,6 +46,20 @@ function ProductCard({ product }) {
   }}
 >
   ₹{product.price}
+</p>
+
+<p
+  style={{
+    fontWeight: "600",
+    color:
+      product.status === "available"
+        ? "green"
+        : "red",
+  }}
+>
+  {product.status === "available"
+    ? "Available"
+    : "Sold"}
 </p>
 
   <Link
