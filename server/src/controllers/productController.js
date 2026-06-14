@@ -197,6 +197,8 @@ res.status(200).json({
     });
   }
 };
+
+
 const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findById(
