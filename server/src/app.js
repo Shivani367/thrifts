@@ -10,7 +10,9 @@ const productRoutes = require("./routes/productRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const adminRoutes =
   require("./routes/adminRoutes");
-
+const orderRoutes = require(
+  "./routes/orderRoutes"
+);
 const app = express();
 app.use("/api/test", testRoutes);
 app.use(cors());
@@ -23,6 +25,7 @@ app.use(
   "/api/admin",
   adminRoutes
 );
+app.use("/api/orders", orderRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,
