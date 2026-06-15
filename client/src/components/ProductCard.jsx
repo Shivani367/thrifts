@@ -1,10 +1,48 @@
 import { Link } from "react-router-dom";
+import api from "../services/api";
+import { useState } from "react";
 
-function ProductCard({ product }) {
+function ProductCard({
+  product,
+  showWishlistButton = true,
+}){
+  const [saved, setSaved] = useState(false);
+  const handleWishlist = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await api.post(
+  `/wishlist/${product._id}`,
+  {},
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+
+setSaved(true);
+  } catch (error) {
+  if (
+    error.response?.data?.message ===
+    "Product already in wishlist"
+  ) {
+    setSaved(true);
+  } else {
+    alert(
+      error.response?.data?.message
+    );
+  }
+}
+};
   return (
     <div
   style={{
   background: "#FFFDF9",
+  opacity:
+  product.status === "sold"
+    ? 0.85
+    : 1,
 boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
 border: "1px solid #EADBC8",
   borderRadius: "16px",
@@ -52,16 +90,32 @@ border: "1px solid #EADBC8",
   style={{
     fontWeight: "600",
     color:
-      product.status === "available"
-        ? "green"
-        : "red",
+      product.status === "sold"
+        ? "#B71C1C"
+        : "#2E7D32",
   }}
 >
-  {product.status === "available"
-    ? "Available"
-    : "Sold"}
+  {product.status === "sold"
+    ? "SOLD OUT"
+    : "Available"}
 </p>
 
+{product.status === "available" &&
+  showWishlistButton && (
+    <button
+    onClick={handleWishlist}
+    style={{
+      background: "#FFF0F0",
+      border: "1px solid #FFB3B3",
+      padding: "8px 12px",
+      borderRadius: "8px",
+      cursor: "pointer",
+      marginBottom: "10px",
+    }}
+  >
+    {saved ? "❤️ Saved" : "🤍 Save"}
+  </button>
+)}
   <Link
   to={`/product/${product._id}`}
   style={{

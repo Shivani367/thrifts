@@ -43,12 +43,18 @@ borderBottom: "1px solid #EADBC8",
           HOME
         </Link>
 
-        <span>ELECTRONICS</span>
-        <span>CLOTHES</span>
-        <span>BOOKS</span>
-        <span>SPORTS</span>
+        <Link
+  to="/wishlist"
+  style={{
+    textDecoration: "none",
+    color: "#3D2C2E",
+    
+  }}
+>
+  WishList
+</Link>
       </div>
-
+          
       {/* Center Logo */}
       <h1
   style={{
@@ -62,6 +68,10 @@ fontSize: "32px",
 >
   THRIFTS
 </h1>
+
+<Link to="/profile">
+  Profile
+</Link>
 
       {/* Right Side */}
       <div
@@ -84,7 +94,7 @@ fontSize: "32px",
             >
               Dashboard
             </Link>
-
+                
             <Link
               to="/sell"
               style={{
@@ -131,6 +141,9 @@ fontSize: "32px",
             >
               Register
             </Link>
+            <Link to="/admin">
+  Admin
+</Link>
           </>
         )}
       </div>

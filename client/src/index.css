@@ -16,3 +16,7 @@ body {
 * {
   box-sizing: border-box;
 }
+opacity:
+  product.status === "sold"
+    ? 0.75
+    : 1,

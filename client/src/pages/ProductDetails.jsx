@@ -55,7 +55,19 @@ function ProductDetails() {
 
       <p>Age: {product.productAge}</p>
 
-      <p>Status: {product.status}</p>
+      <p
+  style={{
+    fontWeight: "bold",
+    color:
+      product.status === "sold"
+        ? "#B71C1C"
+        : "#2E7D32",
+  }}
+>
+  {product.status === "sold"
+    ? "SOLD OUT"
+    : "Available"}
+</p>
 
       <p>
         Original Price:
@@ -64,6 +76,23 @@ function ProductDetails() {
       <p>
   Seller: {product.seller?.name}</p>
 <p>Email: {product.seller.email}</p>
+{product.status === "available" && (
+  // your existing <a> tag here
+
+<a
+  href={`mailto:${product.seller.email}?subject=Interested in ${product.title}`}
+  style={{
+    background: "#C97B63",
+    color: "white",
+    padding: "10px 16px",
+    borderRadius: "8px",
+    textDecoration: "none",
+    display: "inline-block",
+    marginTop: "10px",
+  }}
+>
+  Contact Seller
+</a>)}
 
     </div>
   );

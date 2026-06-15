@@ -7,6 +7,9 @@ const authRoutes = require("./routes/authRoutes");
 const User = require("./models/User");
 const testRoutes = require("./routes/testRoutes");
 const productRoutes = require("./routes/productRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
+const adminRoutes =
+  require("./routes/adminRoutes");
 
 const app = express();
 app.use("/api/test", testRoutes);
@@ -15,6 +18,11 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/wishlist", wishlistRoutes);
+app.use(
+  "/api/admin",
+  adminRoutes
+);
 app.get("/", (req, res) => {
   res.json({
     success: true,

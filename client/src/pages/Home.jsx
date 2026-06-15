@@ -8,20 +8,26 @@ function Home() {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] =useState(1);
   
   
 
   useEffect(() => {
   fetchProducts();
-}, [keyword, category,sort]);
+}, [keyword, category,sort,page]);
+
 
   const fetchProducts = async () => {
     try {
       const response = await api.get(
-  `/products?keyword=${keyword}&category=${category}&sort=${sort}`
+  `/products?keyword=${keyword}&category=${category}&sort=${sort}&page=${page}`
 );
 
       setProducts(response.data.products);
+setTotalPages(
+  response.data.totalPages
+);
     } catch (error) {
       console.log(error);
     }
@@ -149,6 +155,34 @@ function Home() {
         <h2>No products found</h2>
       )}
     </div>
+
+    <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    gap: "10px",
+    marginTop: "30px",
+  }}
+>
+  <button
+    disabled={page === 1}
+    onClick={() => setPage(page - 1)}
+  >
+    Previous
+  </button>
+
+  <span>
+    Page {page} of {totalPages}
+  </span>
+
+  <button
+    disabled={page === totalPages}
+    onClick={() => setPage(page + 1)}
+  >
+    Next
+  </button>
+</div>
+
   </div>
 );
 }

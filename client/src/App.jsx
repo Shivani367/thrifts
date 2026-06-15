@@ -10,6 +10,9 @@ import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Wishlist from "./pages/Wishlist";
+import Profile from "./pages/Profile";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -48,6 +51,7 @@ function App() {
               </PrivateRoute>
             }
           />
+
           <Route
             path="/edit-product/:id"
             element={
@@ -56,6 +60,11 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          <Route
+        path="/profile"
+        element={<Profile />}
+        />
           <Route
   path="/forgot-password"
   element={<ForgotPassword />}
@@ -64,9 +73,19 @@ function App() {
   path="/reset-password/:token"
   element={<ResetPassword />}
 />
-        </Routes>
-        
-            
+<Route
+  path="/wishlist"
+  element={
+    <PrivateRoute>
+      <Wishlist />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/admin"
+  element={<AdminDashboard />}
+/>
+    </Routes>      
     </BrowserRouter>
     </div>
   );

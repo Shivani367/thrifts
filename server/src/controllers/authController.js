@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const Product = require("../models/Product");
+const Wishlist = require("../models/Wishlist");
 
 // REGISTER
 const registerUser = async (req, res) => {
@@ -167,6 +169,51 @@ ${resetUrl}`
 
 };
 
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(
+      req.user.userId
+    ).select("-password");
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+const getProfileStats = async (
+  req,
+  res
+) => {
+  try {
+    const productsCount =
+      await Product.countDocuments({
+        seller: req.user.userId,
+      });
+
+    const wishlistCount =
+      await Wishlist.countDocuments({
+        user: req.user.userId,
+      });
+
+    res.status(200).json({
+      success: true,
+      productsCount,
+      wishlistCount,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const resetPassword = async (req, res) => {
   try {
     const { token } = req.params;
@@ -214,5 +261,6 @@ module.exports = {
   registerUser,
   loginUser,
   forgotPassword,
-  resetPassword,
+  resetPassword, getProfile,getProfileStats,
+
 };
