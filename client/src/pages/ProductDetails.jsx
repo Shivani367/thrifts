@@ -5,7 +5,6 @@ import api from "../services/api";
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [imageHovered, setImageHovered] = useState(false);
 
   const themeColors = {
     background: "#FAF6F1",
@@ -22,6 +21,7 @@ function ProductDetails() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchProduct();
   }, [id]);
 
@@ -153,15 +153,11 @@ function ProductDetails() {
                   alt={product.title}
                   style={{
                     width: "100%",
-                    height: "400px",
-                    objectFit: "cover",
+                    height: "auto",
+                    objectFit: "contain",
                     borderRadius: "24px",
                     display: "block",
-                    transform: imageHovered ? "scale(1.08)" : "scale(1)",
-                    transition: "transform 0.4s ease",
                   }}
-                  onMouseEnter={() => setImageHovered(true)}
-                  onMouseLeave={() => setImageHovered(false)}
                 />
               </div>
             )}
@@ -248,7 +244,7 @@ function ProductDetails() {
                       style={{
                         fontSize: "10px",
                         color: themeColors.textSecondary,
-                        fontWeight: "700",
+                        fontWeight: "600",
                         margin: "0 0 6px 0",
                         textTransform: "uppercase",
                         letterSpacing: "0.5px",
