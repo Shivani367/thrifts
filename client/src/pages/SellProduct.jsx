@@ -362,13 +362,35 @@ function SellProduct() {
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 800, color: '#3D2C2E' }}>Your listing is now live on THRIFTS</div>
-                    <div style={{ marginTop: 6, color: '#6E5D57' }}>{publishedData.title || title} • {publishedData.price ? `$${publishedData.price}` : price ? `₹{price}` : ''}</div>
+                    <div style={{ marginTop: 6, color: '#6E5D57' }}>{publishedData.title || title} • {publishedData.price
+  ? `₹${publishedData.price}`
+  : price
+  ? `₹${price}`
+  : ''}</div>
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', gap: 10 }}>
-                  <button onClick={() => { const id = publishedData.id || publishedData._id; if (id) navigate(`/product/${id}`); else navigate('/'); }} style={{ flex: 1, height: 48, borderRadius: 12, border: 'none', background: '#2E6A3D', color: '#fff', fontWeight: 800, cursor: 'pointer' }}>View Listing</button>
-                  <button onClick={() => { setPublishedData(null); navigate('/'); }} style={{ flex: 1, height: 48, borderRadius: 12, border: '1px solid rgba(61,44,46,0.06)', background: '#fff', color: '#3D2C2E', fontWeight: 700, cursor: 'pointer' }}>Back to Home</button>
+                  <button
+  type="button"
+  onClick={() => {
+    const id = publishedData.id || publishedData._id;
+    if (id) navigate(`/product/${id}`);
+    else navigate('/');
+  }}
+>
+  View Listing
+</button>
+
+<button
+  type="button"
+  onClick={() => {
+    setPublishedData(null);
+    navigate('/');
+  }}
+>
+  Back to Home
+</button>
                 </div>
               </div>
             ) : (
