@@ -344,7 +344,7 @@ function SellProduct() {
             <div style={{ flex: 1 }}>
               <div style={{ color: '#3D2C2E', fontWeight: 800, fontSize: 15 }}>{title || 'Untitled'}</div>
               <div style={{ marginTop: 6, display: 'flex', gap: 12, color: '#6E5D57', fontSize: 13 }}>
-                <div>Price: <strong style={{ color: '#3D2C2E' }}>{price ? `₹{price}` : '—'}</strong></div>
+                <div>Price: <strong style={{ color: '#3D2C2E' }}>{price ? `₹${price}` : '—'}</strong></div>
                 <div>Category: <strong style={{ color: '#3D2C2E' }}>{category}</strong></div>
                 <div>Condition: <strong style={{ color: '#3D2C2E' }}>{condition}</strong></div>
               </div>
