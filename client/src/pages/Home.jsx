@@ -747,10 +747,10 @@ setTotalPages(
               Connect
             </h4>
             {[
-              { label: "Instagram", href: "https://instagram.com" },
-              { label: "LinkedIn", href: "https://linkedin.com" },
-              { label: "GitHub", href: "https://github.com" },
-              { label: "Email", href: "mailto:hello@thrifts.com" },
+              { label: "Instagram", href: "https://www.instagram.com/shivanii_.017/?next=%2F&hl=en" },
+              { label: "LinkedIn", href: "https://www.linkedin.com/in/shivani-m-760280261/" },
+              { label: "GitHub", href: "https://github.com/Shivani367" },
+              { label: "Email", href: "m.shivaniii017@gmail.com" },
             ].map((link) => (
               <a
                 key={link.label}
