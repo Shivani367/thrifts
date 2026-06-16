@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function SellProduct() {
   const [title, setTitle] = useState("");
@@ -12,12 +13,17 @@ function SellProduct() {
   const [location, setLocation] = useState("");
   const [productAge, setProductAge] = useState("");
   const [image, setImage] = useState(null);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [publishError, setPublishError] = useState(null);
+  const [publishedData, setPublishedData] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef(null);
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (isPublishing) return; // prevent duplicate submissions
+    setIsPublishing(true);
+    setPublishError(null);
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
@@ -43,9 +49,13 @@ function SellProduct() {
         },
       });
 
-      console.log(response.data);
+      // Success: keep form data intact and show success card
+      setPublishedData(response.data || { title, price });
+      setIsPublishing(false);
     } catch (error) {
-      console.log(error.response?.data);
+      setPublishError(error.response?.data?.message || error.message || "An error occurred while publishing.");
+      setIsPublishing(false);
+      console.log(error.response?.data || error.message || error);
     }
   };
 
@@ -314,32 +324,84 @@ function SellProduct() {
             )}
           </div>
 
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              marginTop: "34px",
-              border: "none",
-              borderRadius: "14px",
-              background: "#C97B63",
-              color: "#FFFDF9",
-              padding: "16px 24px",
-              fontSize: "16px",
-              fontWeight: "700",
-              cursor: "pointer",
-              transition: "background 0.25s ease, transform 0.25s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = "#b86953";
-              e.target.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = "#C97B63";
-              e.target.style.transform = "translateY(0)";
-            }}
-          >
-            Publish Listing
-          </button>
+          {/* Publish CTA area: summary card, message, premium button, success and error states */}
+
+          {publishError && (
+            <div style={{ marginTop: 16, padding: 12, borderRadius: 12, background: "#FDEDEE", border: "1px solid rgba(143,38,38,0.12)", color: "#8F2626" }}>
+              <strong>Publishing failed:</strong> {publishError}
+            </div>
+          )}
+
+          <div style={{ marginTop: 18, display: 'flex', gap: 12, alignItems: 'center', background: '#FFFDF9', padding: 12, borderRadius: 12, border: '1px solid rgba(61,44,46,0.04)' }}>
+            <div style={{ width: 64, height: 64, borderRadius: 8, overflow: 'hidden', background: '#fff', flex: '0 0 64px', display: 'grid', placeItems: 'center', border: '1px solid rgba(61,44,46,0.04)' }}>
+              {image ? (
+                <img src={URL.createObjectURL(image)} alt="thumb" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <div style={{ color: '#A0897F', fontSize: 12 }}>No image</div>
+              )}
+            </div>
+
+            <div style={{ flex: 1 }}>
+              <div style={{ color: '#3D2C2E', fontWeight: 800, fontSize: 15 }}>{title || 'Untitled'}</div>
+              <div style={{ marginTop: 6, display: 'flex', gap: 12, color: '#6E5D57', fontSize: 13 }}>
+                <div>Price: <strong style={{ color: '#3D2C2E' }}>{price ? `₹{price}` : '—'}</strong></div>
+                <div>Category: <strong style={{ color: '#3D2C2E' }}>{category}</strong></div>
+                <div>Condition: <strong style={{ color: '#3D2C2E' }}>{condition}</strong></div>
+              </div>
+              <div style={{ marginTop: 8, color: '#7B655D', fontSize: 13 }}>You're helping extend the life of a product and reduce waste by listing it on THRIFTS.</div>
+            </div>
+          </div>
+
+          {/* Button area */}
+          <div style={{ marginTop: 18 }}>
+            {publishedData ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'stretch', animation: 'fadeIn 280ms ease' }}>
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center', background: '#ECF7EE', padding: 14, borderRadius: 12, border: '1px solid rgba(46,106,61,0.12)', color: '#2E6A3D' }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 10, background: '#fff', display: 'grid', placeItems: 'center' }}>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#2E6A3D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 800, color: '#3D2C2E' }}>Your listing is now live on THRIFTS</div>
+                    <div style={{ marginTop: 6, color: '#6E5D57' }}>{publishedData.title || title} • {publishedData.price ? `$${publishedData.price}` : price ? `₹{price}` : ''}</div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: 10 }}>
+                  <button onClick={() => { const id = publishedData.id || publishedData._id; if (id) navigate(`/product/${id}`); else navigate('/'); }} style={{ flex: 1, height: 48, borderRadius: 12, border: 'none', background: '#2E6A3D', color: '#fff', fontWeight: 800, cursor: 'pointer' }}>View Listing</button>
+                  <button onClick={() => { setPublishedData(null); navigate('/'); }} style={{ flex: 1, height: 48, borderRadius: 12, border: '1px solid rgba(61,44,46,0.06)', background: '#fff', color: '#3D2C2E', fontWeight: 700, cursor: 'pointer' }}>Back to Home</button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                disabled={isPublishing}
+                style={{
+                  width: '100%',
+                  height: 60,
+                  borderRadius: 16,
+                  border: 'none',
+                  background: 'linear-gradient(90deg,#C97B63 0%, #B86953 100%)',
+                  color: '#FFFDF9',
+                  fontSize: 16,
+                  fontWeight: 800,
+                  cursor: isPublishing ? 'default' : 'pointer',
+                  boxShadow: isPublishing ? '0 10px 30px rgba(0,0,0,0.08)' : '0 20px 50px rgba(201,123,99,0.22)',
+                  transition: 'transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease',
+                  opacity: isPublishing ? 0.9 : 1,
+                }}
+                onMouseEnter={(e) => { if (!isPublishing) { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 30px 70px rgba(201,123,99,0.28)'; } }}
+                onMouseLeave={(e) => { if (!isPublishing) { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(201,123,99,0.22)'; } }}
+              >
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+                  {isPublishing && (
+                    <span style={{ width: 20, height: 20, borderRadius: 10, border: '2px solid rgba(255,255,255,0.5)', borderTopColor: '#FFFDF9', animation: 'spin 1s linear infinite', display: 'inline-block' }} />
+                  )}
+                  {isPublishing ? 'Publishing Listing...' : 'Publish Listing'}
+                </span>
+                <style>{`@keyframes spin{to{transform:rotate(360deg)}} @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}`}</style>
+              </button>
+            )}
+          </div>
         </form>
 
         <div

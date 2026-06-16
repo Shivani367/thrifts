@@ -15,7 +15,7 @@ const protect = async (req, res, next) => {
     }
 
     console.log("TOKEN:");
-    console.log(token);
+    
 
     if (!token) {
       return res.status(401).json({
@@ -29,8 +29,8 @@ const protect = async (req, res, next) => {
       process.env.JWT_SECRET
     );
 
-    console.log("DECODED:");
-    console.log(decoded);
+    
+    
 
     req.user = decoded;
 
