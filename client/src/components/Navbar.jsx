@@ -128,6 +128,7 @@ function Navbar() {
         >
           Wishlist
         </Link>
+        
 
         {token && (
           <Link
@@ -165,8 +166,10 @@ function Navbar() {
           >
             Admin
           </Link>
+          
         )}
       </div>
+
 
       <div
         style={{
@@ -197,7 +200,20 @@ function Navbar() {
             >
               Sell an Item
             </Link>
-
+              <Link to="/my-purchases"
+              style={{
+                textDecoration: "none",
+                fontWeight: "600",
+                color: "#3D2C2E",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#3D2C2E";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = "#3D2C2E";
+              }}>
+                My Purchases
+            </Link>
             <Link
               to="/profile"
               style={{

@@ -111,8 +111,36 @@ const verifyPayment = async (req, res) => {
     });
   }
 };
+const getMyPurchases = async (
+  req,
+  res
+) => {
+  try {
+
+    const orders =
+      await Order.find({
+        buyer: req.user.userId,
+        status: "paid",
+      })
+        .populate("product")
+        .sort({
+          createdAt: -1,
+        });
+
+    res.status(200).json({
+      success: true,
+      orders,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 module.exports = {
   createOrder,
-  verifyPayment,
+  verifyPayment,getMyPurchases,
 };

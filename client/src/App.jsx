@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -13,6 +14,8 @@ import ResetPassword from "./pages/ResetPassword";
 import Wishlist from "./pages/Wishlist";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
+import MyPurchases
+from "./pages/MyPurchases";
 
 function App() {
   return (
@@ -84,6 +87,14 @@ function App() {
 <Route
   path="/admin"
   element={<AdminDashboard />}
+/>
+<Route
+  path="/my-purchases"
+  element={
+    <PrivateRoute>
+      <MyPurchases />
+    </PrivateRoute>
+  }
 />
     </Routes>      
     </BrowserRouter>

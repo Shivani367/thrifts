@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  createOrder,verifyPayment,
+  createOrder,verifyPayment,getMyPurchases,
 } = require("../controllers/orderController");
 
 const authMiddleware = require(
@@ -18,6 +18,11 @@ router.post(
   "/verify",
   authMiddleware,
   verifyPayment
+);
+router.get(
+  "/my-purchases",
+  authMiddleware,
+  getMyPurchases
 );
 
 module.exports = router;
