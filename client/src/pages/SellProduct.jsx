@@ -355,8 +355,88 @@ function SellProduct() {
           {/* Button area */}
           <div style={{ marginTop: 18 }}>
             {publishedData ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'stretch', animation: 'fadeIn 280ms ease' }}>
-                <div style={{ display: 'flex', gap: 12, alignItems: 'center', background: '#ECF7EE', padding: 14, borderRadius: 12, border: '1px solid rgba(46,106,61,0.12)', color: '#2E6A3D' }}>
+              <div
+                style={{
+                  maxWidth: "600px",
+                  margin: "0 auto",
+                  padding: "24px",
+                  background: "#FFFFFF",
+                  borderRadius: "16px",
+                  boxShadow: "0 18px 46px rgba(61, 44, 46, 0.10)",
+                  border: "1px solid rgba(61,44,46,0.06)",
+                  textAlign: "center",
+                  animation: "fadeIn 280ms ease",
+                }}
+              >
+                <style>{`
+                  .success-actions {
+                    display: flex;
+                    justify-content: center;
+                    gap: 14px;
+                    margin-top: 22px;
+                  }
+
+                  .success-action-button {
+                    width: 180px;
+                    height: 48px;
+                    border-radius: 12px;
+                    font-size: 15px;
+                    font-weight: 800;
+                    cursor: pointer;
+                    transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+                  }
+
+                  .success-action-button:hover {
+                    transform: translateY(-2px);
+                  }
+
+                  .success-action-primary {
+                    background: #D0876A;
+                    color: #FFFFFF;
+                    border: 2px solid #D0876A;
+                    box-shadow: 0 12px 28px rgba(208, 135, 106, 0.24);
+                  }
+
+                  .success-action-primary:hover {
+                    background: #BD7358;
+                    border-color: #BD7358;
+                  }
+
+                  .success-action-secondary {
+                    background: #FFFDF9;
+                    color: #D0876A;
+                    border: 2px solid #D0876A;
+                  }
+
+                  .success-action-secondary:hover {
+                    background: #FAF6F1;
+                  }
+
+                  @media (max-width: 560px) {
+                    .success-actions {
+                      flex-direction: column;
+                      align-items: stretch;
+                    }
+
+                    .success-action-button {
+                      width: 100%;
+                    }
+                  }
+
+                  @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(6px); }
+                    to { opacity: 1; transform: none; }
+                  }
+                `}</style>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#E6F4EA', color: '#227A32', display: 'grid', placeItems: 'center', marginBottom: 16 }}>
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </div>
+                  <h2 style={{ margin: 0, color: '#3B2A2A', fontSize: 24, lineHeight: 1.25, fontWeight: 900 }}>Listing Published Successfully</h2>
+                  <p style={{ margin: '10px auto 0', maxWidth: 460, color: '#6E5D57', fontSize: 15, lineHeight: 1.7 }}>Your product is now live and visible to potential buyers.</p>
+                </div>
+
+                <div style={{ display: 'none', gap: 12, alignItems: 'center', background: '#ECF7EE', padding: 14, borderRadius: 12, border: '1px solid rgba(46,106,61,0.12)', color: '#2E6A3D' }}>
                   <div style={{ width: 48, height: 48, borderRadius: 10, background: '#fff', display: 'grid', placeItems: 'center' }}>
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#2E6A3D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </div>
@@ -370,9 +450,19 @@ function SellProduct() {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: 10 }}>
+                <div style={{ marginTop: 22, padding: 16, borderRadius: 14, background: '#EEF7EA', border: '1px solid rgba(34, 122, 50, 0.12)', display: 'flex', gap: 12, alignItems: 'flex-start', textAlign: 'left' }}>
+                  <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#FFFFFF', color: '#227A32', display: 'grid', placeItems: 'center', flex: '0 0 32px' }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 19C5 9 12 4 21 4c0 9-5 16-15 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M5 19c3-5 7-8 12-10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+                  </div>
+                  <p style={{ margin: 0, color: '#3D2C2E', fontSize: 14, lineHeight: 1.7, fontWeight: 600 }}>
+                    Every item reused is one less item wasted. Thank you for contributing to a more sustainable marketplace.
+                  </p>
+                </div>
+
+                <div className="success-actions">
                   <button
   type="button"
+  className="success-action-button success-action-primary"
   onClick={() => {
     const id = publishedData.id || publishedData._id;
     if (id) navigate(`/product/${id}`);
@@ -384,6 +474,7 @@ function SellProduct() {
 
 <button
   type="button"
+  className="success-action-button success-action-secondary"
   onClick={() => {
     setPublishedData(null);
     navigate('/');
@@ -426,6 +517,7 @@ function SellProduct() {
           </div>
         </form>
 
+        {!publishedData && (
         <div
           style={{
             marginTop: "36px",
@@ -446,6 +538,7 @@ function SellProduct() {
             Every item reused is one less item wasted. Thank you for choosing a more sustainable way to buy and sell.
           </p>
         </div>
+        )}
       </div>
     </div>
   );

@@ -144,6 +144,8 @@ function ProductDetails() {
                 style={{
                   position: "relative",
                   overflow: "hidden",
+                  maxWidth: "520px",
+                  margin: "0 auto",
                   borderRadius: "24px",
                   boxShadow: "0 20px 60px rgba(61, 44, 46, 0.15)",
                 }}
