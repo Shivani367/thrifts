@@ -3,8 +3,6 @@ const cloudinary = require("../config/cloudinary");
 
 const createProduct = async (req, res) => {
   try {
-    console.log(req.body);
-
     const {
   title,
   description,
@@ -18,7 +16,7 @@ const createProduct = async (req, res) => {
 } = req.body;
 
 let imageUrl = "";
-
+//Fix the details validation.
 if (req.file) {
   const result = await cloudinary.uploader.upload(
     `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`

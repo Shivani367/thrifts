@@ -235,6 +235,28 @@ navigate("/");
           Sign In
         </button>
 
+        <button
+  type="button"
+  onClick={() => {
+    window.location.href =
+      "https://thrifts-backend.onrender.com/api/auth/google";
+  }}
+  style={{
+    width: "100%",
+    padding: "14px 20px",
+    fontSize: "16px",
+    fontWeight: "600",
+    background: "#ffffff",
+    color: "#3D2C2E",
+    border: "2px solid #e8dfd6",
+    borderRadius: "8px",
+    cursor: "pointer",
+    marginTop: "12px",
+  }}
+>
+  Continue with Google
+</button>
+
         {/* Sign Up Link */}
         <p
           style={{

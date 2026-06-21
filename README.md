@@ -67,7 +67,7 @@ Welcome to THRIFTS, a modern marketplace that promotes sustainable living by ena
 | Database       | MongoDB, Mongoose                   |
 | Authentication | JWT, bcryptjs                       |
 | Payments       | Razorpay                            |
-| Image Handling | Cloudinary                          |
+| Image Handling | Cloudinary                           |
 | Deployment     | Render                              |
 
 ## How It Works

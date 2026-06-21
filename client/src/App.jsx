@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import MyPurchases
 from "./pages/MyPurchases";
+import OAuthSuccess from "./pages/OAuthSuccess";
 
 function App() {
   return (
@@ -95,6 +96,10 @@ function App() {
       <MyPurchases />
     </PrivateRoute>
   }
+/>
+<Route
+  path="/oauth-success"
+  element={<OAuthSuccess />}
 />
     </Routes>      
     </BrowserRouter>

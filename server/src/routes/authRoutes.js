@@ -19,7 +19,7 @@ router.post(
 router.post(
   "/reset-password/:token",
   resetPassword
-);
+); 
 router.get(
   "/profile",
   authMiddleware,
